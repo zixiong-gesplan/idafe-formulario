@@ -3,7 +3,6 @@
   "type": "module",
   "version": "0.0.1",
   "packageManager": "pnpm@9.10.0",
-
   "scripts": {
     "dev": "astro dev --remote",
     "build": "astro build  --remote",
@@ -13,6 +12,7 @@
   "dependencies": {
     "@astrojs/db": "^0.14.14",
     "@astrojs/react": "^4.2.7",
+    "@astrojs/vercel": "^8.1.4",
     "@libsql/client": "^0.15.6",
     "@tailwindcss/vite": "^4.1.8",
     "@types/react": "^19.1.4",
@@ -20,7 +20,5 @@
     "astro": "^5.7.13",
     "tailwindcss": "^4.1.8",
     "turso": "^0.1.0"
-  },
-  "devDependencies": {
   }
 }
