@@ -10,6 +10,8 @@ import yaml from '@rollup/plugin-yaml';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://zixiong-gesplan.github.io',
+  base: 'idafe-formulario',
   vite: {
     plugins: [tailwindcss(),yaml()],
   },
