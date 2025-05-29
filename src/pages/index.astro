@@ -1,0 +1,114 @@
+---
+import {db, Answer} from 'astro:db';
+import '../styles/global.css'
+
+
+const centros = [
+  "Alonso Pérez Díaz", "Alonso Quesada", "Argana", "Carrizal", "Cristóbal García Blairzy",
+  "En Altavista", "En Vallehermoso", "José Zerpa", "La Goleta", "La Isleta", "La Laguna",
+  "La Orotava- Manuel González Pérez", "Las Breñas", "Las Galletas", "Las Huesas", "Los Cristianos",
+  "Los Tarahales", "Luis Diego Cuscoy", "Mogán", "Montaña de Guaza", "Playa Honda", "Profesor Martín Miranda",
+  "Sabino Berthelot", "Taibique", "Támara", "Tías", "Tomás de Iriarte", "Vecindario", "Villa Ascensión"
+];
+
+if (Astro.request.method === 'POST') {
+    try {
+      const formData = await Astro.request.formData();
+      
+      const centro = formData.get('centro');
+      const valorar1 = formData.get('valorar1');
+      const valorar2 = formData.get('valorar2');
+      const valorar3 = formData.get('valorar3');
+      console.log('Form values:', { centro, valorar1, valorar2, valorar3 });
+      await db.insert(Answer).values({
+        centro,
+        valorar1,
+        valorar2,
+        valorar3
+      });
+    } catch (error) {
+        console.error('Error handling form submission:', error);
+    }
+
+}
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Centros</title>
+    <script type="module">
+      document.addEventListener('DOMContentLoaded', () => {
+        const selects = [
+          document.getElementById('centro'),
+          document.getElementById('valorar1'),
+          document.getElementById('valorar2'),
+          document.getElementById('valorar3')
+        ];
+
+        function updateOptions() {
+          // Get selected values (excluding empty)
+          const selected = selects.map(s => s.value).filter(v => v);
+
+          selects.forEach((select, idx) => {
+            Array.from(select.options).forEach(option => {
+              if (option.value === "") {
+                option.disabled = false;
+                return;
+              }
+              // Disable if selected in another select
+              option.disabled = selected.includes(option.value) && select.value !== option.value;
+            });
+          });
+        }
+
+        selects.forEach(select => {
+          select.addEventListener('change', updateOptions);
+        });
+
+        updateOptions();
+      });
+    </script>
+  </head>
+  <body class="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-xl border border-blue-200">
+      <h1 class="text-3xl font-extrabold mb-6 text-center text-blue-700">Selecciona tu centro y valora otros tres</h1>
+      <form method="POST" class="space-y-6" enctype="multipart/form-data">
+        <div>
+          <label class="block font-semibold mb-2 text-blue-800" for="centro">Tu centro</label>
+          <select name="centro" id="centro" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
+            <option value="">Selecciona tu centro</option>
+            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-2 text-blue-800" for="valorar1">Centro a valorar 1 - 8 puntos</label>
+          <select name="valorar1" id="valorar1" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
+            <option value="">Selecciona un centro</option>
+            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-2 text-blue-800" for="valorar2">Centro a valorar 2 - 4 puntos</label>
+          <select name="valorar2" id="valorar2" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
+            <option value="">Selecciona un centro</option>
+            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-2 text-blue-800" for="valorar3">Centro a valorar 3 - 2 puntos</label>
+          <select name="valorar3" id="valorar3" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
+            <option value="">Selecciona un centro</option>
+            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+          </select>
+        </div>
+
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 transition text-white px-6 py-3 rounded-lg w-full font-bold shadow-md">Enviar</button>
+      </form>
+    </div>
+  </body>
+</html>
