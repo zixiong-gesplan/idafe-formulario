@@ -1,8 +1,8 @@
 ---
-import {db, Answer} from 'astro:db';
+import {turso} from '../turso'
 import '../styles/global.css'
-
-
+import Logo from '../assets/idafe_gob_ctee_blanco.png'
+import { Image } from 'astro:assets';
 const centros = [
   "Alonso Pérez Díaz", "Alonso Quesada", "Argana", "Carrizal", "Cristóbal García Blairzy",
   "En Altavista", "En Vallehermoso", "José Zerpa", "La Goleta", "La Isleta", "La Laguna",
@@ -14,18 +14,20 @@ const centros = [
 if (Astro.request.method === 'POST') {
     try {
       const formData = await Astro.request.formData();
-      
       const centro = formData.get('centro');
       const valorar1 = formData.get('valorar1');
       const valorar2 = formData.get('valorar2');
       const valorar3 = formData.get('valorar3');
       console.log('Form values:', { centro, valorar1, valorar2, valorar3 });
-      await db.insert(Answer).values({
-        centro,
-        valorar1,
-        valorar2,
-        valorar3
-      });
+      await turso.execute(
+        `INSERT INTO Answer (school, best, worst, middle) VALUES (?, ? , ?, ?)`,
+        [
+          typeof centro === 'string' ? centro : '',
+          typeof valorar1 === 'string' ? valorar1 : '',
+          typeof valorar2 === 'string' ? valorar2 : '',
+          typeof valorar3 === 'string' ? valorar3 : ''
+        ]
+      );
     } catch (error) {
         console.error('Error handling form submission:', error);
     }
@@ -71,7 +73,8 @@ if (Astro.request.method === 'POST') {
       });
     </script>
   </head>
-  <body class="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-4">
+  <body class=`bg-[url("/bg.jpg")] min-h-screen flex flex-col items-center justify-center p-4`>
+    <img src="/idafe_gob_ctee_blanco.png" alt="IDAFE LOGO"/>
     <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-xl border border-blue-200">
       <h1 class="text-3xl font-extrabold mb-6 text-center text-blue-700">Selecciona tu centro y valora otros tres</h1>
       <form method="POST" class="space-y-6" enctype="multipart/form-data">
