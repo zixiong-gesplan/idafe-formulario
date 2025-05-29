@@ -15,17 +15,18 @@ if (Astro.request.method === 'POST') {
     try {
       const formData = await Astro.request.formData();
       const centro = formData.get('centro');
-      const valorar1 = formData.get('valorar1');
-      const valorar2 = formData.get('valorar2');
-      const valorar3 = formData.get('valorar3');
-      console.log('Form values:', { centro, valorar1, valorar2, valorar3 });
+      const best = formData.get('best');
+      const middle = formData.get('middle');
+      const worst = formData.get('worst');
+      console.log('Form values:', { centro, best, middle: middle, worst: worst });
       await turso.execute(
         `INSERT INTO Answer (school, best, worst, middle) VALUES (?, ? , ?, ?)`,
         [
           typeof centro === 'string' ? centro : '',
-          typeof valorar1 === 'string' ? valorar1 : '',
-          typeof valorar2 === 'string' ? valorar2 : '',
-          typeof valorar3 === 'string' ? valorar3 : ''
+          typeof best === 'string' ? best : '',
+          typeof worst === 'string' ? worst : '',
+          typeof middle === 'string' ? middle : '',
+
         ]
       );
     } catch (error) {
@@ -44,9 +45,9 @@ if (Astro.request.method === 'POST') {
       document.addEventListener('DOMContentLoaded', () => {
         const selects = [
           document.getElementById('centro'),
-          document.getElementById('valorar1'),
-          document.getElementById('valorar2'),
-          document.getElementById('valorar3')
+          document.getElementById('best'),
+          document.getElementById('middle'),
+          document.getElementById('worst')
         ];
 
         function updateOptions() {
@@ -87,24 +88,24 @@ if (Astro.request.method === 'POST') {
         </div>
 
         <div>
-          <label class="block font-semibold mb-2 text-blue-800" for="valorar1">Centro a valorar 1 - 8 puntos</label>
-          <select name="valorar1" id="valorar1" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
+          <label class="block font-semibold mb-2 text-blue-800" for="best">Primer lugar</label>
+          <select name="best" id="best" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
             <option value="">Selecciona un centro</option>
             {centros.map((centro) => <option value={centro}>{centro}</option>)}
           </select>
         </div>
 
         <div>
-          <label class="block font-semibold mb-2 text-blue-800" for="valorar2">Centro a valorar 2 - 4 puntos</label>
-          <select name="valorar2" id="valorar2" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
+          <label class="block font-semibold mb-2 text-blue-800" for="middle">Segundo lugar</label>
+          <select name="middle" id="middle" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
             <option value="">Selecciona un centro</option>
             {centros.map((centro) => <option value={centro}>{centro}</option>)}
           </select>
         </div>
 
         <div>
-          <label class="block font-semibold mb-2 text-blue-800" for="valorar3">Centro a valorar 3 - 2 puntos</label>
-          <select name="valorar3" id="valorar3" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
+          <label class="block font-semibold mb-2 text-blue-800" for="worst">Tercer lugar</label>
+          <select name="worst" id="worst" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
             <option value="">Selecciona un centro</option>
             {centros.map((centro) => <option value={centro}>{centro}</option>)}
           </select>
