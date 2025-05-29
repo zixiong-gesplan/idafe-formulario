@@ -10,7 +10,6 @@ import db from '@astrojs/db';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://zixiong-gesplan.github.io',
-  base: 'idafe-formulario',
   vite: {
     plugins: [tailwindcss()],
   },
