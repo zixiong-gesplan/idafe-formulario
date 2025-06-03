@@ -4,11 +4,26 @@ import '../styles/global.css'
 import Logo from '../assets/idafe_gob_ctee_blanco.png'
 import { Image } from 'astro:assets';
 const centros = [
-  "Alonso Pérez Díaz", "Alonso Quesada", "Argana", "Carrizal", "Cristóbal García Blairzy",
-  "En Altavista", "En Vallehermoso", "José Zerpa", "La Goleta", "La Isleta", "La Laguna",
-  "La Orotava- Manuel González Pérez", "Las Breñas", "Las Galletas", "Las Huesas", "Los Cristianos",
-  "Los Tarahales", "Luis Diego Cuscoy", "Mogán", "Montaña de Guaza", "Playa Honda", "Profesor Martín Miranda",
-  "Sabino Berthelot", "Taibique", "Támara", "Tías", "Tomás de Iriarte", "Vecindario", "Villa Ascensión"
+  "IES Carrizal (Gran Canaria)",
+  "CEIP Cristóbal García Blairzy (Fuerteventura)",
+  "IES En Altavista (Lanzarote)",
+  "IES José Zerpa (Gran Canaria)",
+  "CEIP La Goleta (Gran Canaria)",
+  "CEIP La Laguna (La Palma)",
+  "IES La Orotava - Manuel González Pérez (Tenerife)",
+  "IES Las Breñas (La Palma)",
+  "IES Las Galletas (Tenerife)",
+  "IES Las Huesas (Gran Canaria)",
+  "IES Los Cristianos (Tenerife)",
+  "IES Luis Diego Cuscoy (Tenerife)",
+  "CEO Mogán (Gran Canaria)",
+  "IES Profesor Martín Miranda (Tenerife)",
+  "IES Sabino Berthelot (Tenerife)",
+  "CEIP Taibique (El Hierro)",
+  "IES Támara (Gran Canaria)",
+  "IES Tías (Lanzarote)",
+  "IES Tomás de Iriarte (Tenerife)",
+  "IES Vecindario (Gran Canaria)",
 ];
 
 if (Astro.request.method === 'POST') {
@@ -83,7 +98,7 @@ if (Astro.request.method === 'POST') {
           <label class="block font-semibold mb-2 text-blue-800" for="centro">Tu centro</label>
           <select name="centro" id="centro" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
             <option value="">Selecciona tu centro</option>
-            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+            {centros.map((centro, index) => <option value={centro}>{index+1}. {centro}</option>)}
           </select>
         </div>
 
