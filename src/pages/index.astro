@@ -114,7 +114,7 @@ if (Astro.request.method === 'POST') {
           <label class="block font-semibold mb-2 text-blue-800" for="best">Primer lugar</label>
           <select name="best" id="best" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
             <option value="">Selecciona un centro</option>
-            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+            {centros.map((centro, index) => <option value={centro}>{index+1}. {centro}</option>)}
           </select>
         </div>
 
@@ -122,7 +122,7 @@ if (Astro.request.method === 'POST') {
           <label class="block font-semibold mb-2 text-blue-800" for="middle">Segundo lugar</label>
           <select name="middle" id="middle" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
             <option value="">Selecciona un centro</option>
-            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+            {centros.map((centro, index) => <option value={centro}>{index+1}. {centro}</option>)}
           </select>
         </div>
 
@@ -130,7 +130,7 @@ if (Astro.request.method === 'POST') {
           <label class="block font-semibold mb-2 text-blue-800" for="worst">Tercer lugar</label>
           <select name="worst" id="worst" class="w-full border border-blue-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" required>
             <option value="">Selecciona un centro</option>
-            {centros.map((centro) => <option value={centro}>{centro}</option>)}
+            {centros.map((centro, index) => <option value={centro}>{index+1}. {centro}</option>)}
           </select>
         </div>
 
